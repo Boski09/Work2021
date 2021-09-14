@@ -5,6 +5,10 @@ variable "project" {
 }
 variable "env" {
   type = string
-  default = "dev"
+  default = "cert"
   description = "Environment name"
+}
+variable "vpc_id" {
+  type        = string
+  description = "Vpc id"
 }
