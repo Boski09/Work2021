@@ -7,12 +7,12 @@ output "vpc_public_subnets" {
 output "vpc_private_subnets" {
     value = module.vpc.private_subnets
 }
-# output "s3Bucket" {
-#     value = module.s3_bucket.s3_bucket
-# }
-# output "cloudfrontDNS" {
-#     value = module.cloudfront.cloudfront_dns
-# }
+output "s3Bucket" {
+    value = module.s3_bucket.s3_bucket
+}
+output "cloudfrontDNS" {
+    value = module.cloudfront.cloudfront_dns
+}
 output "lambda_getlookupdata" {
     value = module.lambda_getlookupdata.lambda_function_arn
 }
