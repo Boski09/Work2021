@@ -1,6 +1,6 @@
 variable "project" {
   type = string
-  default = "proj"
+  default = "ddws"
   description = "Project name"
 }
 variable "env" {

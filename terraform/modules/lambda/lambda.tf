@@ -65,7 +65,7 @@ resource "aws_iam_policy" "lambda_policy" {
 EOF
 }
 resource "aws_iam_role" "lambda_function_role" {
-  name = "${var.lambda_function_name}-role"
+  name = "${var.lambda_function_name}"
   tags = var.tags
   assume_role_policy = <<EOF
 {

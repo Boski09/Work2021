@@ -2,10 +2,10 @@ data "aws_region" "aws-region" {}
 
 locals {
   tags = {
-    "Application Service Number" = "1223"
-    "Business Application Number" = "678"
-    "Application Name" = "Victor"
-    "Environment name" = "cert"
+    "Application Service Number" = "APP0005852"
+    "Business Application Number" = "APM0001866"
+    "Application Name" = "Ignite"
+    "Environment name" = "${terraform.workspace}"
   }
   lambda_env_vars = {}
   
@@ -70,16 +70,287 @@ module "vpc" {
   
 # }
 
-module "lambda_function" {
+module "lambda_getlookupdata" {
   depends_on                     = [module.vpc]
   source                         = "../../modules/lambda"
   project                        = var.project
   env                            = "${terraform.workspace}"
   vpc_id                         = module.vpc.vpc_id
   subnet_id                      = module.vpc.private_subnets[0]
-  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda"
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-bizparty-getlookupdata"
   lambda_handler_name            = "lambda_function.lambda_handler"
-  lambda_function_runtime        = "python3.9"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_getchargetypes" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-getchargetypes"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_deletehoachargeitem" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-deletehoachargeitem"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_gethoacharge" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-gethoacharge"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_getindividualhoacharge" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-getindividualhoacharge"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_updatehoadues" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-updatehoadues"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_updatehoaentity" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-updatehoaentity"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_updatehoaproration" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-updatehoaproration"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_createhoacharge" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-createhoacharge"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_createhoachargeitem" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-createhoachargeitem"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_updatehoachargeitem" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-chargeprocess-updatehoachargeitem"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_createsigningorder" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-notary-createsigningorder"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_getpropertyaddress" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-notary-getpropertyaddress"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_deletesigningorder" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-notary-deletesigningorder"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_getsigningorder" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-notary-getsigningorder"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+}
+module "lambda_signingorderlist" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-notary-signingorderlist"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
+  lambda_max_memory              = 500
+  lambda_timeout                 = 300
+  lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
+  lambda_env_variables           = local.lambda_env_vars
+  tags                           = local.tags
+  
+}
+module "lambda_updatesigningorder" {
+  depends_on                     = [module.vpc]
+  source                         = "../../modules/lambda"
+  project                        = var.project
+  env                            = "${terraform.workspace}"
+  vpc_id                         = module.vpc.vpc_id
+  subnet_id                      = module.vpc.private_subnets[0]
+  lambda_function_name           = "${var.project}-${terraform.workspace}-lambda-mfe-notary-updatesigningorder"
+  lambda_handler_name            = "lambda_function.lambda_handler"
+  lambda_function_runtime        = "dotnetcore3.1"
   lambda_max_memory              = 500
   lambda_timeout                 = 300
   lambda_deployment_package_path = "../../modules/lambda/lambda_function.zip"
